@@ -47,6 +47,17 @@ impl Add for Vec2 {
     }
 }
 
+impl Sub for Vec2 {
+    type Output = Vec2;
+
+    fn sub(self, other: Self) -> Self::Output {
+        Vec2 {
+            x: self.x - other.x,
+            y: self.y - other.y,
+        }        
+    }
+}
+
 impl PartialEq for Vec2 {
     fn eq(&self, other: &Self) -> bool {
         if self.x == other.x && self.y == self.y {
@@ -81,5 +92,13 @@ mod tests {
         let v2 = Vec2::new(5.0, 3.0);
         let res = v1 + v2;
         assert_eq!(res, Vec2::new(7.0, 8.0))
+    }
+
+    #[test]
+    fn sub_vec2d() {
+        let v1 = Vec2::new(2.0, 5.0);
+        let v2 = Vec2::new(5.0, 3.0);
+        let res = v1 - v2;
+        assert_eq!(res, Vec2::new(-3.0, 2.0))
     }
 }
