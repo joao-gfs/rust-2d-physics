@@ -2,8 +2,8 @@ use std::ops::{Mul, MulAssign, Add, AddAssign, Sub, SubAssign, Div, DivAssign};
 
 #[derive(Debug, Clone, Copy)]
 pub struct Vec2 {
-    x: f32,
-    y: f32,
+    pub x: f32,
+    pub y: f32,
 }
 
 impl Vec2 {

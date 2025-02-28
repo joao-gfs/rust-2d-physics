@@ -30,6 +30,14 @@ impl Body {
         self.position += self.velocity * delta_t;
         self.acceleration = vec2d::Vec2::new(0.0, 0.0);
     }
+
+    fn distance_from_point(&self, x: f32, y: f32) -> f32 {
+        ((self.position.x - x).powi(2) + (self.position.y - y).powi(2)).sqrt()
+    }
+
+    fn distance_from_body(&self, other: Body) -> f32 {
+        self.distance_from_point(other.position.x, other.position.y)
+    }
 }
 
 #[cfg(test)]
@@ -48,5 +56,20 @@ mod tests {
         let mut b1 = Body::new(0.0, 0.0, 1.0, 4.0, 2.0, 3.0);
         b1.apply_force(5.0, 3.0);
         assert_eq!(b1.acceleration, vec2d::Vec2::new(2.5, 1.5))
+    }
+
+    #[test]
+    fn get_distance_from_point() {
+        let b1 = Body::new(0.0, 0.0, 1.0, 4.0, 2.0, 3.0);
+        let distance= b1.distance_from_point(1.0, 1.0);
+        assert_eq!(distance, (2.0_f32).sqrt())
+    }
+
+    #[test]
+    fn get_distance_from_body() {
+        let b1 = Body::new(0.0, 0.0, 1.0, 4.0, 2.0, 3.0);
+        let b2 = Body::new(1.0, 1.0, 0.0, 0.0, 0.0, 1.0);
+        let distance= b1.distance_from_body(b2);
+        assert_eq!(distance, (2.0_f32).sqrt())
     }
 }
