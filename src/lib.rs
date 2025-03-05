@@ -30,13 +30,16 @@ impl Body {
         self.position += self.velocity * delta_t;
         self.acceleration = vec2d::Vec2::new(0.0, 0.0);
     }
+}
 
-    fn distance_from_point(&self, x: f32, y: f32) -> f32 {
-        ((self.position.x - x).powi(2) + (self.position.y - y).powi(2)).sqrt()
+mod utils {
+    pub fn point_distance(x1:f32, y1:f32, x2: f32, y2: f32) -> f32 {
+        ((x1 - x2).powi(2) + (y1 - y2).powi(2)).sqrt()
     }
-
-    fn distance_from_body(&self, other: Body) -> f32 {
-        self.distance_from_point(other.position.x, other.position.y)
+    
+    use super::Body;
+    pub fn body_distance(b1: &Body, b2: &Body) -> f32 {
+        point_distance(b1.position.x, b1.position.y, b2.position.x, b2.position.y)
     }
 }
 
@@ -60,8 +63,7 @@ mod tests {
 
     #[test]
     fn get_distance_from_point() {
-        let b1 = Body::new(0.0, 0.0, 1.0, 4.0, 2.0, 3.0);
-        let distance= b1.distance_from_point(1.0, 1.0);
+        let distance = utils::point_distance(0.0, 0.0, 1.0, 1.0);
         assert_eq!(distance, (2.0_f32).sqrt())
     }
 
@@ -69,7 +71,7 @@ mod tests {
     fn get_distance_from_body() {
         let b1 = Body::new(0.0, 0.0, 1.0, 4.0, 2.0, 3.0);
         let b2 = Body::new(1.0, 1.0, 0.0, 0.0, 0.0, 1.0);
-        let distance= b1.distance_from_body(b2);
+        let distance= utils::body_distance(&b1, &b2);
         assert_eq!(distance, (2.0_f32).sqrt())
     }
 }
