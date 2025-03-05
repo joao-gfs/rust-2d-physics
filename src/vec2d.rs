@@ -1,4 +1,5 @@
-use std::ops::{Mul, MulAssign, Add, AddAssign, Sub, SubAssign, Div, DivAssign};
+use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
+use std::fmt::{Debug, Display};
 
 #[derive(Debug, Clone, Copy)]
 pub struct Vec2 {
@@ -9,6 +10,12 @@ pub struct Vec2 {
 impl Vec2 {
     pub fn new(x: f32, y:f32) -> Self {
         Self {x, y}
+    }
+}
+
+impl Display for Vec2{
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "x: {}, y: {}", self.x, self.y)
     }
 }
 
@@ -169,6 +176,12 @@ impl PartialEq for Vec2 {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn display_test() {
+        let v1 = Vec2::new(2.0, 5.0);
+        assert_eq!(format!("Coordinates: {v1}"), "Coordinates: x: 2, y: 5")
+    }
 
     #[test]
     fn mul_vec2d() {
