@@ -36,7 +36,7 @@ impl  Mul<f32> for Vec2 {
     fn mul(self, rhs:f32) -> Self::Output {
         Vec2 {
             x: self.x * rhs,
-            y: self.x * rhs,
+            y: self.y * rhs,
         }
     }
 }
